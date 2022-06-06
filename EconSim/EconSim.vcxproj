@@ -88,13 +88,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\src\SFML-2.5.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\SFML-2.5.1\include;C:\src\imgui;C:\src\imgui-sfml;C:\src\Kairos</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\src\SFML-2.5.1\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\src\SFML-2.5.1\lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -105,14 +105,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\src\SFML-2.5.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\SFML-2.5.1\include;C:\src\imgui;C:\src\imgui-sfml;C:\src\Kairos</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\src\SFML-2.5.1\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\src\SFML-2.5.1\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -150,15 +151,49 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\src\imgui-sfml\imgui-SFML.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\imgui\imgui.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Absorel.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\BasicClock.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Continuum.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Duration.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\FpsLite.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Stopwatch.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Timer.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Timestep.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\TimestepLite.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Settlement.cpp" />
     <ClCompile Include="Sim.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Absorel.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\all.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\BasicClock.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Continuum.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Duration.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\FpsLite.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Stopwatch.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Timer.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Timestep.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\TimestepLite.hpp" />
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Yalpes.hpp" />
     <ClInclude Include="FastNoiseLite.h" />
+    <ClInclude Include="Marketplace.h" />
+    <ClInclude Include="Settlement.h" />
     <ClInclude Include="Sim.h" />
     <ClInclude Include="Terrain.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\src\Kairos\Kairos\Absorel.inl" />
+    <None Include="..\..\..\..\..\..\src\Kairos\Kairos\Yalpes.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

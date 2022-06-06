@@ -1,8 +1,11 @@
 #include "Terrain.h"
+#include "FastNoiseLite.h"
 #include <iostream>
 
 
 Terrain::Terrain() {
+    //fields
+
     // Create and configure FastNoise object
     FastNoiseLite noise;
     noise.SetFrequency(.001);

@@ -1,13 +1,14 @@
 #pragma once
 
-#include "FastNoiseLite.h"
-
 
 class Sim {
 private:
-	int worldSize = 0;
+	float simSpeed;
 public:
 	Sim();
-	static void Update(float elapsed);
+	void Update(float elapsed);
+	void increaseSpeed();
+	void decreaseSpeed();
+	float getSimSpeed();
 
 };

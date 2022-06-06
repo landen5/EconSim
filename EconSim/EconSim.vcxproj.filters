@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Kairos">
+      <UniqueIdentifier>{d1b5abf0-7896-4a23-9d1a-cf373841d774}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -27,6 +30,54 @@
     <ClCompile Include="Terrain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\imgui\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\imgui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\imgui\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\imgui-sfml\imgui-SFML.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\imgui\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\imgui\imgui_tables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Absorel.cpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\BasicClock.cpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Continuum.cpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Duration.cpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\FpsLite.cpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Stopwatch.cpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Timer.cpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Timestep.cpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\TimestepLite.cpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClCompile>
+    <ClCompile Include="Settlement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sim.h">
@@ -38,5 +89,55 @@
     <ClInclude Include="Terrain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Absorel.hpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\all.hpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\BasicClock.hpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Continuum.hpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Duration.hpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\FpsLite.hpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Stopwatch.hpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Timer.hpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Timestep.hpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\TimestepLite.hpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Yalpes.hpp">
+      <Filter>Source Files\Kairos</Filter>
+    </ClInclude>
+    <ClInclude Include="Settlement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Marketplace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\src\Kairos\Kairos\Absorel.inl">
+      <Filter>Source Files\Kairos</Filter>
+    </None>
+    <None Include="..\..\..\..\..\..\src\Kairos\Kairos\Yalpes.inl">
+      <Filter>Source Files\Kairos</Filter>
+    </None>
   </ItemGroup>
 </Project>
