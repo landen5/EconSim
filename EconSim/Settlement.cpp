@@ -29,7 +29,9 @@ sf::Sprite Settlement::getSprite() {
 	return sprite;
 }
 
-
+void Settlement::rotateSprite(float angle) {
+	sprite.rotate(angle);
+}
 
 void Settlement::changePopulation(int amount) {
 	population += amount;

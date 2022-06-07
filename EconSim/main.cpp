@@ -60,10 +60,6 @@ int main()
     Sim *sim = new Sim();
     TileMap map = t1.generate();
 
-    //temp
-    Settlement *london = new Settlement("London", 500, sf::Vector2f(2000.0f, 3000.0f));
-    Settlement* paris = new Settlement("Paris", 800, sf::Vector2f(3000.0f, 500.0f));
-
     view1.setCenter(sf::Vector2f((t1.getSize() * 8)/2, (t1.getSize() * 8)/2)); //*8 bc each tile is 8 pixels
     view1.setSize(sf::Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
 
@@ -86,32 +82,28 @@ int main()
                 //std::cout << gameZoom << std::endl;
             }
 
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if (event.key.code == sf::Keyboard::W)
-                {
-                    view1.move(0.f, -25.f);
-
-                }
-                if (event.key.code == sf::Keyboard::S)
-                {
-                    view1.move(0.f, 25.f);
-
-                }
-                if (event.key.code == sf::Keyboard::A)
-                {
-                    view1.move(-25.f, 0.f);
-
-                }
-                if (event.key.code == sf::Keyboard::D)
-                {
-                    view1.move(25.f, 0.f);
-
-                }
-            }
         }
-        ImGui::SFML::Update(window, deltaClock.restart()); //imgui uses delta internally
+        //keyboard input
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        {
+            view1.move(0.f, -15.f);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        {
+            view1.move(0.f, 15.f);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            view1.move(-15.f, 0.f);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            view1.move(15.f, 0.f);
+        }
 
+        ImGui::SFML::Update(window, deltaClock.restart()); //imgui uses delta internally
+        
+                                                           //gui rendering
         topMenuBar(sim);
         //ImGui::ShowDemoWindow();
 
@@ -121,8 +113,8 @@ int main()
         window.setView(view1);
         view1.zoom(gameZoom);
         window.draw(map);
-        window.draw(london->getSprite());
-        window.draw(paris->getSprite());
+        window.draw((*sim).settlements.at(0).getSprite());
+        window.draw((*sim).settlements.at(1).getSprite());
         (*sim).Update(elapsed.asSeconds());
 
         ImGui::SFML::Render(window);

@@ -17,4 +17,5 @@ public:
 	void initSprite(sf::Vector2f pos);
 	void changePopulation(int amount);
 	sf::Sprite getSprite();
+	void rotateSprite(float angle);
 };

@@ -1,8 +1,13 @@
 #pragma once
 
 #include <iostream>
+#include <string>
+#include <vector>
 
-//this handles trades
 class Marketplace {
+private:
+	std::vector<std::string> comodityTypes;
 
+public:
+	Marketplace();
 };
