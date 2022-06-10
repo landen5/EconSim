@@ -78,7 +78,13 @@
     <ClCompile Include="Settlement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Market.cpp">
+    <ClCompile Include="Marketplace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Agent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Offer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -132,6 +138,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Marketplace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Agent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Offer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

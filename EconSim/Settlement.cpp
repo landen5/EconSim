@@ -1,4 +1,5 @@
 #include "Settlement.h"
+#include "Marketplace.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
@@ -35,4 +36,12 @@ void Settlement::rotateSprite(float angle) {
 
 void Settlement::changePopulation(int amount) {
 	population += amount;
+}
+
+Marketplace Settlement::getMarket() {
+	return market;
+}
+
+void Settlement::performRound() {
+	market.doRound();
 }

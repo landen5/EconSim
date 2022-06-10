@@ -21,8 +21,10 @@ Sim::Sim() {
 void Sim::Update(float elapsed) {
 	timestep.addFrame(); // (2)
 	while (timestep.isUpdateRequired()) {// (3) 
-		std::cout << getSimSpeed() << std::endl;
-		settlements.at(0).rotateSprite(25.0f);
+		std::cout << "New round, sim speed: " << getSimSpeed() << std::endl;
+		//settlements.at(0).rotateSprite(25.0f);
+		settlements.at(0).performRound(); //perofrm round with the first settlement - london
+		
 	}
 	
 }

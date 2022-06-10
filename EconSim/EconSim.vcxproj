@@ -166,8 +166,10 @@
     <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Timer.cpp" />
     <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Timestep.cpp" />
     <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\TimestepLite.cpp" />
+    <ClCompile Include="Agent.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Market.cpp" />
+    <ClCompile Include="Marketplace.cpp" />
+    <ClCompile Include="Offer.cpp" />
     <ClCompile Include="Settlement.cpp" />
     <ClCompile Include="Sim.cpp" />
     <ClCompile Include="Terrain.cpp" />
@@ -186,8 +188,10 @@
     <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Timestep.hpp" />
     <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\TimestepLite.hpp" />
     <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Yalpes.hpp" />
+    <ClInclude Include="Agent.h" />
     <ClInclude Include="FastNoiseLite.h" />
     <ClInclude Include="Marketplace.h" />
+    <ClInclude Include="Offer.h" />
     <ClInclude Include="Settlement.h" />
     <ClInclude Include="Sim.h" />
     <ClInclude Include="Terrain.h" />
