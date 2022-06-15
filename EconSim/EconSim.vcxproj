@@ -170,6 +170,7 @@
     <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Timestep.cpp" />
     <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\TimestepLite.cpp" />
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="GUI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Marketplace.cpp" />
     <ClCompile Include="Offer.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Yalpes.hpp" />
     <ClInclude Include="Agent.h" />
     <ClInclude Include="FastNoiseLite.h" />
+    <ClInclude Include="GUI.h" />
     <ClInclude Include="Marketplace.h" />
     <ClInclude Include="Offer.h" />
     <ClInclude Include="Settlement.h" />
