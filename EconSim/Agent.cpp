@@ -4,9 +4,11 @@
 Agent::Agent(std::string profession, int wealth) {
 	this->profession = profession;
 	this->wealth = wealth;
-	foodAmount = 5;
-	toolAmount = 5;
-	woodAmount = 5;
+
+	int startingRange = 8 - 1 + 1; //max - min +1
+	foodAmount = rand() % startingRange + 1;
+	toolAmount = rand() % startingRange + 1;
+	woodAmount = rand() % startingRange + 1;
 	id = &*this;
 }
 

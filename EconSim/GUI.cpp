@@ -13,17 +13,12 @@ void GUI::topMenuBar(Sim* sim) {
             //std::cout << "Increased speed" << std::endl;
             sim->increaseSpeed();
         }
-        ImGui::Text("speed: ");
+        ImGui::Text("Speed: ");
         if (ImGui::Button("-")) {
             //std::cout << "Decreased speed" << std::endl;
             sim->decreaseSpeed();
         }
 
-        if (ImGui::BeginMenu("Commodity Prices"))
-        {
-            priceGraph(sim);
-            ImGui::EndMenu();
-        }
         if (ImGui::BeginMenu("Edit"))
         {
             if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
@@ -31,11 +26,69 @@ void GUI::topMenuBar(Sim* sim) {
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();
+
+        priceGraph(sim);
     }
 }
+// utility structure for realtime plot
+struct ScrollingBuffer {
+    int MaxSize;
+    int Offset;
+    ImVector<ImVec2> Data;
+    ScrollingBuffer(int max_size = 2000) {
+        MaxSize = max_size;
+        Offset = 0;
+        Data.reserve(MaxSize);
+    }
+    void AddPoint(float x, float y) {
+        if (Data.size() < MaxSize)
+            Data.push_back(ImVec2(x, y));
+        else {
+            Data[Offset] = ImVec2(x, y);
+            Offset = (Offset + 1) % MaxSize;
+        }
+    }
+    void Erase() {
+        if (Data.size() > 0) {
+            Data.shrink(0);
+            Offset = 0;
+        }
+    }
+};
 
+static float t = 0;
 void GUI::priceGraph(Sim* sim) {
     ImPlot::CreateContext();
+
+    ImGui::BulletText("Dynamic price chart");
+    static ScrollingBuffer sdata1, sdata2, sdata3;
+    ImVec2 mouse = ImGui::GetMousePos();
+    //static float t = 0;
+    //t += ImGui::GetIO().DeltaTime;
+    sdata1.AddPoint(t, sim->settlements.at(0).getMarket().getFoodPrice());
+    sdata2.AddPoint(t, sim->settlements.at(0).getMarket().getWoodPrice());
+    sdata3.AddPoint(t, sim->settlements.at(0).getMarket().getToolPrice());
+
+    static float history = 10.0f;
+    ImGui::SliderFloat("Zoom", &history, 1, 30, "%.1f s"); //check demo for original implementation
+
+    static ImPlotAxisFlags flags = ImPlotAxisFlags_NoTickLabels;
+
+    if (ImPlot::BeginPlot("##Scrolling", ImVec2(-1, 150))) {
+        ImPlot::SetupAxes("Rounds", "Price", flags, flags);
+        ImPlot::SetupAxisLimits(ImAxis_X1, t - history, t, ImGuiCond_Always);
+        ImPlot::SetupAxisLimits(ImAxis_Y1, 0, 10); //y axis limits
+        ImPlot::PlotLine("Food Price", &sdata1.Data[0].x, &sdata1.Data[0].y, sdata1.Data.size(), sdata1.Offset, 2 * sizeof(float));
+        ImPlot::PlotLine("Wood Price", &sdata2.Data[0].x, &sdata2.Data[0].y, sdata2.Data.size(), sdata2.Offset, 2 * sizeof(float));
+        ImPlot::PlotLine("Tool Price", &sdata3.Data[0].x, &sdata3.Data[0].y, sdata3.Data.size(), sdata3.Offset, 2 * sizeof(float));
+
+        ImPlot::EndPlot();
+    }
+    if (sim->didRound == true) {
+        t += 0.1;
+    }
+
+    /*
     static double xs1[101], ys1[101], ys2[101], ys3[101];
     srand(0);
     for (int i = 0; i < 101; ++i) {
@@ -83,6 +136,6 @@ void GUI::priceGraph(Sim* sim) {
             ImPlot::PlotLine("Stock 3", xs1, ys3, 101);
         }
         ImPlot::EndPlot();
-    }
+    } */
     ImPlot::DestroyContext();
 }

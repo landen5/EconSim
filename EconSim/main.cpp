@@ -8,8 +8,6 @@
 #include "FastNoiseLite.h"
 #include "Terrain.h"
 #include "Settlement.h"
-
-#include "implot.h"
 #include "GUI.h"
 
 

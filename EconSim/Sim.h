@@ -8,6 +8,7 @@ private:
 
 public:
 	Sim();
+	bool didRound;
 	void Update(float elapsed);
 	void increaseSpeed();
 	void decreaseSpeed();

@@ -9,6 +9,9 @@
 #include <vector>
 
 Marketplace::Marketplace() {
+	historicalFoodPrices.push_back(0);
+	historicalToolPrices.push_back(0);
+	historicalWoodPrices.push_back(0);
 	//initialize all of the market commodities - perhaps use a separate json file or something
 	comodityTypes.push_back("food");
 	comodityTypes.push_back("wood");

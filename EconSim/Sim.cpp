@@ -9,7 +9,7 @@ kairos::Timestep timestep; //1
 
 
 Sim::Sim() {
-	simSpeed = 1.0;
+	simSpeed = 10;
 	timestep.setStep(1.0 / simSpeed); // fraction of a second
 	//potential memory leak
 	Settlement* london = new Settlement("London", 500, sf::Vector2f(2000.0f, 3000.0f));
@@ -19,12 +19,15 @@ Sim::Sim() {
 }
 
 void Sim::Update(float elapsed) {
+	
+	didRound = false;
 	timestep.addFrame(); // (2)
+
 	while (timestep.isUpdateRequired()) {// (3) 
 		std::cout << "New round, sim speed: " << getSimSpeed() << std::endl;
 		//settlements.at(0).rotateSprite(25.0f);
 		settlements.at(0).performRound(); //perofrm round with the first settlement - london
-		
+		didRound = true;
 	}
 	
 }
