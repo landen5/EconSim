@@ -44,4 +44,5 @@ Marketplace Settlement::getMarket() {
 
 void Settlement::performRound() {
 	market.doRound();
+	std::cout << "Food price: " << market.getFoodPrice() << std::endl;
 }

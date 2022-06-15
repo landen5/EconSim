@@ -37,6 +37,7 @@ void Marketplace::doRound() {
 		if (foodBid.getCommodity() != "empty") {
 			foodBids.push_back(foodBid);
 		}
+		
 		Offer toolBid = agents.at(i).generateBidOffers("tool");
 		if (toolBid.getCommodity() != "empty") {
 			toolBids.push_back(toolBid);
@@ -45,6 +46,7 @@ void Marketplace::doRound() {
 		if (woodBid.getCommodity() != "empty") {
 			woodBids.push_back(woodBid);
 		}
+		
 
 		//generate asks
 		Offer foodAsk = agents.at(i).generateAskOffers("food");
@@ -63,34 +65,15 @@ void Marketplace::doRound() {
 	std::cout << "All offers added" << std::endl;
 
 	resolveOffers("food");
-	//resolveOffers("tool");
-	//resolveOffers("wood");
-
-	//for debug
-	/*
-	std::cout << "food bids size: " << foodBids.size() << std::endl;
-	std::cout << "tool bids size: " << toolBids.size() << std::endl;
-	std::cout << "wood bids size: " << woodBids.size() << std::endl;
-
-	std::cout << "food asks size: " << foodAsks.size() << std::endl;
-	std::cout << "tool asks size: " << toolAsks.size() << std::endl;
-	std::cout << "wood asks size: " << woodAsks.size() << std::endl;
-	*/
-
-	//**BELOW ARE TEMP, remove to avoid future issues
-	//clear bids
-	toolBids.clear();
-	woodBids.clear();
-
-	//clear asks
-	toolAsks.clear();
-	woodAsks.clear();
+	resolveOffers("wood");
+	resolveOffers("tool");
 }
 
 void Marketplace::resolveOffers(std::string commodity) {
 	auto rng = std::default_random_engine{};
 
 	if (commodity == "food") {
+
 		//shuffle bids/asks books
 		std::shuffle(std::begin(foodBids), std::end(foodBids), rng);
 		std::shuffle(std::begin(foodAsks), std::end(foodAsks), rng);
@@ -106,52 +89,223 @@ void Marketplace::resolveOffers(std::string commodity) {
 		for (int i = 0; i < foodAsks.size(); i++) {
 			//std::cout << "Sell food for $" << foodAsks.at(i).getPrice() << std::endl;
 		}
-		//std::cout << "reached this point" << std::endl;
-		int sellerPos;
-		int buyerPos;
+
+		int foodSum = 0;
+		int roundCount = 0;
 		while (foodBids.size() != 0 && foodAsks.size() != 0) { //while both books are not empty
+			int sellerPos;
+			int buyerPos;
+
 			int sellerID = foodAsks.at(0).getID();
 			int buyerID = foodBids.at(0).getID();
-			//std::cout << "food asks size: " << foodAsks.size() << std::endl;
-			//std::cout << "food bids size: " << foodBids.size() << std::endl;
-
-			//min of units offered by seller and units desired by buyer
-			int quantityTraded = std::min(foodAsks.at(0).getAmount(), foodBids.at(0).getAmount()); 
-			//average of two prices
-			int clearingPrice = (foodAsks.at(0).getPrice() + foodBids.at(0).getPrice()) / 2;
-
-			//match seller offer id with agent
-			if (quantityTraded > 0) {
-				for (int i = 0; i < agents.size(); i++) {
-					if (agents.at(i).getID() == sellerID) {
-						sellerPos = i;
-						agents.at(i).sellAmount -= quantityTraded;
-						agents.at(i).foodAmount -= quantityTraded; //transfer units of commod
-						agents.at(i).wealth += quantityTraded * clearingPrice;
-						//update price model
-					}
-					if (agents.at(i).getID() == buyerID) {
-						buyerPos = i;
-						agents.at(i).buyAmount -= quantityTraded;
-						agents.at(i).foodAmount += quantityTraded; 
-						agents.at(i).wealth -= quantityTraded * clearingPrice;
-						//update price model
-					}
+			for (int i = 0; i < agents.size(); i++) {
+				if (agents.at(i).getID() == sellerID) {
+					sellerPos = i;
+				}
+				if (agents.at(i).getID() == buyerID) {
+					buyerPos = i;
 				}
 			}
+
+			int quantityTraded = std::min(agents.at(sellerPos).foodToSell, agents.at(buyerPos).foodToBuy);
+			int clearingPrice = (foodAsks.at(0).getPrice() + foodBids.at(0).getPrice()) / 2;
 			
-			if (agents.at(sellerPos).sellAmount == 0) {
-				foodAsks.erase(foodAsks.begin());
+			if (quantityTraded > 0) { // i think this condition is not necesary
+				/*
+				std::cout << agents.at(sellerPos).getProfession() << agents.at(sellerPos).getID() << " (" <<
+					agents.at(sellerPos).foodToSell << " food) matched with " <<
+					agents.at(buyerPos).getProfession() << agents.at(buyerPos).getID() << " (" <<
+					agents.at(buyerPos).foodToBuy << " food) Cleared at " << clearingPrice << std::endl; */
+				agents.at(sellerPos).foodToSell -= quantityTraded;
+				agents.at(buyerPos).foodToBuy -= quantityTraded;
+				agents.at(sellerPos).foodAmount -= quantityTraded;
+				agents.at(buyerPos).foodAmount += quantityTraded;
+				agents.at(sellerPos).wealth += quantityTraded * clearingPrice;
+				agents.at(buyerPos).wealth -= quantityTraded * clearingPrice;
+				//both update price models
+
 			}
-			if (agents.at(buyerPos).buyAmount == 0) {
+			if (agents.at(sellerPos).foodToSell == 0) {
+				foodAsks.erase(foodAsks.begin());
+				//std::cout << "removed seller" << std::endl;
+			}
+			if (agents.at(buyerPos).foodToBuy == 0) {
 				foodBids.erase(foodBids.begin());
-			} 
-			std::cout << agents.at(buyerPos).buyAmount << std::endl;
+				//std::cout << "removed buyer" << std::endl;
+			}
+
+			foodSum += clearingPrice;
+			roundCount++;
+		}
+		if (roundCount > 0) {
+			historicalFoodPrices.push_back(foodSum / roundCount);
+		}
+		else
+		{
+			historicalFoodPrices.push_back(0);
 		}
 		//**issuing agents update price beliefs
 		//reject remaing offers
 		foodAsks.clear();
 		foodBids.clear();
+	}
+
+	//------------------------------------WOOD-------------------------------------------------------
+	if (commodity == "wood") {
+
+		//shuffle bids/asks books
+		std::shuffle(std::begin(woodBids), std::end(woodBids), rng);
+		std::shuffle(std::begin(woodAsks), std::end(woodAsks), rng);
+
+		//sort bids high->low
+		std::sort(woodBids.rbegin(), woodBids.rend(), [](Offer& one, Offer& two) {return one.getPrice() < two.getPrice(); });
+		for (int i = 0; i < woodBids.size(); i++) {
+			//std::cout << "Buy " << foodBids.at(i).getCommodity() << " for $" << foodBids.at(i).getPrice() << std::endl;
+		}
+
+		//sort asks low->high
+		std::sort(woodAsks.begin(), woodAsks.end(), [](Offer& one, Offer& two) {return one.getPrice() < two.getPrice(); });
+		for (int i = 0; i < woodAsks.size(); i++) {
+			//std::cout << "Sell food for $" << foodAsks.at(i).getPrice() << std::endl;
+		}
+
+		int woodSum = 0;
+		int roundCount = 0;
+		while (woodBids.size() != 0 && woodAsks.size() != 0) { //while both books are not empty
+			int sellerPos;
+			int buyerPos;
+
+			int sellerID = woodAsks.at(0).getID();
+			int buyerID = woodBids.at(0).getID();
+			for (int i = 0; i < agents.size(); i++) {
+				if (agents.at(i).getID() == sellerID) {
+					sellerPos = i;
+				}
+				if (agents.at(i).getID() == buyerID) {
+					buyerPos = i;
+				}
+			}
+
+			int quantityTraded = std::min(agents.at(sellerPos).woodToSell, agents.at(buyerPos).woodToBuy);
+			int clearingPrice = (woodAsks.at(0).getPrice() + woodBids.at(0).getPrice()) / 2;
+
+			if (quantityTraded > 0) { // i think this condition is not necesary
+				/*
+				std::cout << agents.at(sellerPos).getProfession() << agents.at(sellerPos).getID() << " (" <<
+					agents.at(sellerPos).foodToSell << " food) matched with " <<
+					agents.at(buyerPos).getProfession() << agents.at(buyerPos).getID() << " (" <<
+					agents.at(buyerPos).foodToBuy << " food) Cleared at " << clearingPrice << std::endl; */
+				agents.at(sellerPos).woodToSell -= quantityTraded;
+				agents.at(buyerPos).woodToBuy -= quantityTraded;
+				agents.at(sellerPos).woodAmount -= quantityTraded;
+				agents.at(buyerPos).woodAmount += quantityTraded;
+				agents.at(sellerPos).wealth += quantityTraded * clearingPrice;
+				agents.at(buyerPos).wealth -= quantityTraded * clearingPrice;
+				//both update price models
+
+			}
+			if (agents.at(sellerPos).woodToSell == 0) {
+				woodAsks.erase(woodAsks.begin());
+				//std::cout << "removed seller" << std::endl;
+			}
+			if (agents.at(buyerPos).woodToBuy == 0) {
+				woodBids.erase(woodBids.begin());
+				//std::cout << "removed buyer" << std::endl;
+			}
+
+			woodSum += clearingPrice;
+			roundCount++;
+		}
+		if (roundCount > 0) {
+			historicalWoodPrices.push_back(woodSum / roundCount);
+		}
+		else
+		{
+			historicalWoodPrices.push_back(0);
+		}
+		//**issuing agents update price beliefs
+		//reject remaing offers
+		woodAsks.clear();
+		woodBids.clear();
+	}
+
+	//------------------------------------TOOL-------------------------------------------------------
+	if (commodity == "tool") {
+
+		//shuffle bids/asks books
+		std::shuffle(std::begin(toolBids), std::end(toolBids), rng);
+		std::shuffle(std::begin(toolAsks), std::end(toolAsks), rng);
+
+		//sort bids high->low
+		std::sort(toolBids.rbegin(), toolBids.rend(), [](Offer& one, Offer& two) {return one.getPrice() < two.getPrice(); });
+		for (int i = 0; i < toolBids.size(); i++) {
+			//std::cout << "Buy " << foodBids.at(i).getCommodity() << " for $" << foodBids.at(i).getPrice() << std::endl;
+		}
+
+		//sort asks low->high
+		std::sort(toolAsks.begin(), toolAsks.end(), [](Offer& one, Offer& two) {return one.getPrice() < two.getPrice(); });
+		for (int i = 0; i < toolAsks.size(); i++) {
+			//std::cout << "Sell food for $" << foodAsks.at(i).getPrice() << std::endl;
+		}
+
+		int toolSum = 0;
+		int roundCount = 0;
+		while (toolBids.size() != 0 && toolAsks.size() != 0) { //while both books are not empty
+			int sellerPos;
+			int buyerPos;
+
+			int sellerID = toolAsks.at(0).getID();
+			int buyerID = toolBids.at(0).getID();
+			for (int i = 0; i < agents.size(); i++) {
+				if (agents.at(i).getID() == sellerID) {
+					sellerPos = i;
+				}
+				if (agents.at(i).getID() == buyerID) {
+					buyerPos = i;
+				}
+			}
+
+			int quantityTraded = std::min(agents.at(sellerPos).toolToSell, agents.at(buyerPos).toolToBuy);
+			int clearingPrice = (toolAsks.at(0).getPrice() + toolBids.at(0).getPrice()) / 2;
+
+			if (quantityTraded > 0) { // i think this condition is not necesary
+				/*
+				std::cout << agents.at(sellerPos).getProfession() << agents.at(sellerPos).getID() << " (" <<
+					agents.at(sellerPos).foodToSell << " food) matched with " <<
+					agents.at(buyerPos).getProfession() << agents.at(buyerPos).getID() << " (" <<
+					agents.at(buyerPos).foodToBuy << " food) Cleared at " << clearingPrice << std::endl; */
+				agents.at(sellerPos).toolToSell -= quantityTraded;
+				agents.at(buyerPos).toolToBuy -= quantityTraded;
+				agents.at(sellerPos).toolAmount -= quantityTraded;
+				agents.at(buyerPos).toolAmount += quantityTraded;
+				agents.at(sellerPos).wealth += quantityTraded * clearingPrice;
+				agents.at(buyerPos).wealth -= quantityTraded * clearingPrice;
+				//both update price models
+
+			}
+			if (agents.at(sellerPos).toolToSell == 0) {
+				toolAsks.erase(toolAsks.begin());
+				//std::cout << "removed seller" << std::endl;
+			}
+			if (agents.at(buyerPos).toolToBuy == 0) {
+				toolBids.erase(toolBids.begin());
+				//std::cout << "removed buyer" << std::endl;
+			}
+
+			toolSum += clearingPrice;
+			roundCount++;
+		}
+		if (roundCount > 0) {
+			historicalToolPrices.push_back(toolSum / roundCount);
+		}
+		else
+		{
+			historicalToolPrices.push_back(0);
+		}
+		//**issuing agents update price beliefs
+		//reject remaing offers
+		toolAsks.clear();
+		toolBids.clear();
 	}
 }
 
@@ -159,4 +313,16 @@ void Marketplace::getAgentPop() {
 	for (int i = 0; i < agents.size(); i++) {
 		std::cout << agents.at(i).getProfession() << " of id: " << agents.at(i).getID() << std::endl;
 	}
+}
+
+int Marketplace::getFoodPrice() {
+	return historicalFoodPrices.at(historicalFoodPrices.size()-1);
+}
+
+int Marketplace::getToolPrice() {
+	return historicalToolPrices.at(historicalToolPrices.size() - 1);
+}
+
+int Marketplace::getWoodPrice() {
+	return historicalWoodPrices.at(historicalWoodPrices.size() - 1);
 }

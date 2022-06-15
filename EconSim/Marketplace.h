@@ -22,9 +22,18 @@ private:
 	std::vector<Offer> woodBids;
 	std::vector<Offer> woodAsks;
 
+	std::vector<int> historicalFoodPrices;
+	std::vector<int> historicalToolPrices;
+	std::vector<int> historicalWoodPrices;
+
 public:
 	Marketplace();
 	void getAgentPop();
 	void doRound();
 	void resolveOffers(std::string commodity);
+
+	//getters
+	int getFoodPrice();
+	int getToolPrice();
+	int getWoodPrice();
 };

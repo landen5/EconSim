@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\src\SFML-2.5.1\include;C:\src\imgui;C:\src\imgui-sfml;C:\src\Kairos</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\SFML-2.5.1\include;C:\src\imgui;C:\src\imgui-sfml;C:\src\Kairos;C:\src\implot</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,7 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\src\SFML-2.5.1\include;C:\src\imgui;C:\src\imgui-sfml;C:\src\Kairos</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\src\SFML-2.5.1\include;C:\src\imgui;C:\src\imgui-sfml;C:\src\Kairos;C:\src\implot</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,6 +157,9 @@
     <ClCompile Include="..\..\..\..\..\..\src\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\..\..\..\..\..\src\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\..\..\..\..\..\src\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\implot\implot.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\implot\implot_demo.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\src\implot\implot_items.cpp" />
     <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Absorel.cpp" />
     <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\BasicClock.cpp" />
     <ClCompile Include="..\..\..\..\..\..\src\Kairos\Kairos\Continuum.cpp" />
@@ -176,6 +179,8 @@
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\src\implot\implot.h" />
+    <ClInclude Include="..\..\..\..\..\..\src\implot\implot_internal.h" />
     <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos.hpp" />
     <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\Absorel.hpp" />
     <ClInclude Include="..\..\..\..\..\..\src\Kairos\Kairos\all.hpp" />
@@ -199,6 +204,7 @@
   <ItemGroup>
     <None Include="..\..\..\..\..\..\src\Kairos\Kairos\Absorel.inl" />
     <None Include="..\..\..\..\..\..\src\Kairos\Kairos\Yalpes.inl" />
+    <None Include="imgui.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

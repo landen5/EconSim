@@ -9,8 +9,13 @@ private:
 
 	void* id;
 public:
-	int buyAmount;
-	int sellAmount;
+	int foodToBuy;
+	int foodToSell;
+	int woodToBuy;
+	int woodToSell;
+	int toolToBuy;
+	int toolToSell;
+
 	int foodAmount;
 	int woodAmount;
 	int toolAmount;
