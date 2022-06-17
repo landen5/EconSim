@@ -16,16 +16,16 @@ Marketplace::Marketplace() {
 	comodityTypes.push_back("food");
 	comodityTypes.push_back("wood");
 	comodityTypes.push_back("tool");
-	for (int i = 0; i < 10; i++) {
-		Agent* farmer = new Agent("farmer", 100);
+	for (int i = 0; i < 100; i++) {
+		Agent* farmer = new Agent("farmer", 10);
 		agents.push_back(*farmer);
 	}
-	for (int i = 0; i < 10; i++) {
-		Agent* logger = new Agent("logger", 100);
+	for (int i = 0; i < 100; i++) {
+		Agent* logger = new Agent("logger", 10);
 		agents.push_back(*logger);
 	}
-	for (int i = 0; i < 10; i++) {
-		Agent* smith = new Agent("smith", 100);
+	for (int i = 0; i < 100; i++) {
+		Agent* smith = new Agent("smith", 10);
 		agents.push_back(*smith);
 	}
 
@@ -70,6 +70,16 @@ void Marketplace::doRound() {
 	resolveOffers("food");
 	resolveOffers("wood");
 	resolveOffers("tool");
+
+	if (historicalFoodPrices.size() > 10) {
+		historicalFoodPrices.erase(historicalFoodPrices.begin());
+	}
+	if (historicalToolPrices.size() > 10) {
+		historicalToolPrices.erase(historicalToolPrices.begin());
+	}
+	if (historicalWoodPrices.size() > 10) {
+		historicalWoodPrices.erase(historicalWoodPrices.begin());
+	}
 }
 
 void Marketplace::resolveOffers(std::string commodity) {
@@ -96,6 +106,7 @@ void Marketplace::resolveOffers(std::string commodity) {
 		int foodSum = 0;
 		int roundCount = 0;
 		while (foodBids.size() != 0 && foodAsks.size() != 0) { //while both books are not empty
+
 			int sellerPos;
 			int buyerPos;
 
@@ -142,6 +153,11 @@ void Marketplace::resolveOffers(std::string commodity) {
 		}
 		if (roundCount > 0) {
 			historicalFoodPrices.push_back(foodSum / roundCount);
+		}
+		//instead of setting price to zero, it just maintains old price if no trades occured
+		else if (roundCount == 0 && historicalFoodPrices.size() >= 1) {
+			int prev = historicalFoodPrices.at(historicalFoodPrices.size() - 2);
+			historicalFoodPrices.push_back(prev);
 		}
 		else
 		{
@@ -222,6 +238,10 @@ void Marketplace::resolveOffers(std::string commodity) {
 		if (roundCount > 0) {
 			historicalWoodPrices.push_back(woodSum / roundCount);
 		}
+		else if (roundCount == 0 && historicalWoodPrices.size() >= 1) {
+			int prev = historicalWoodPrices.at(historicalWoodPrices.size() - 2);
+			historicalWoodPrices.push_back(prev);
+		}
 		else
 		{
 			historicalWoodPrices.push_back(0);
@@ -300,6 +320,10 @@ void Marketplace::resolveOffers(std::string commodity) {
 		}
 		if (roundCount > 0) {
 			historicalToolPrices.push_back(toolSum / roundCount);
+		}
+		else if (roundCount == 0 && historicalToolPrices.size() >= 1) {
+			int prev = historicalToolPrices.at(historicalToolPrices.size() - 2);
+			historicalToolPrices.push_back(prev);
 		}
 		else
 		{
